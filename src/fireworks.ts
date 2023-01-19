@@ -8,26 +8,19 @@ PixiPlugin.registerPIXI(PIXI);
 const app = new PIXI.Application({ width: 800, height: 600, backgroundColor: 0x000000 });
 document.body.appendChild(app.view as HTMLCanvasElement);
 
-// const box = firework(400, 300, ((Math.random() * 256 | 0) << 16) + ((Math.random() * 256 | 0) << 8) + (Math.random() * 256 | 0));
-
-// app.stage.addChild(box);
-
 function particle(color: number, parent: PIXI.Container) {
     const square = new PIXI.Graphics();
     square.beginFill(0xFFFFFF);
     square.drawRect(0, 0, 4, 4);
-    square.pivot.set(parent.x / 2, parent.y / 2);
+
     gsap.from(square, { pixi: { scale: 0 } });
-    gsap.to(square, { pixi: { x: random(-100, 100), y: random(-100, 100), rotation: 1440, scale: 2, blur: 1 }, duration: 2 });
+    gsap.to(square, { pixi: { x: 'random(-100, 100)', y: 'random(-100, 100)', blur: 1 }, duration: 2 });
     gsap.to(square, { pixi: { tint: color }, duration: 1 });
     gsap.to(square, { pixi: { tint: 0 }, duration: 1, delay: 1 })
 
     parent.addChild(square);
 }
 
-function random(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
 
 function firework(x: number, y: number, color: number) {
     console.log(x, y)
@@ -39,7 +32,7 @@ function firework(x: number, y: number, color: number) {
     }
 
     gsap.to(box, {
-        pixi: { y: 100 },
+        pixi: {},
         duration: 2,
         ease: 'power2',
         onComplete: () => { box.destroy() }
